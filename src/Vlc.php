@@ -41,7 +41,6 @@ class Vlc {
   protected function searchFiles($path) {
     $items = array();
     $result = $this->send('browse', array('dir' => $path));
-    print "Get list of $path \n";
     foreach ($result->element as $item) {
       if ($item->type == 'file') {
         $items[] = $item->uri;
