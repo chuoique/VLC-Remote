@@ -10,8 +10,8 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 switch ($action) {
   case 'list':
     $data = array();
-    foreach ($items as $key => $uri) {
-      $data[] = array($key, pathinfo(urldecode($uri), PATHINFO_FILENAME));
+    foreach ($items as $uri) {
+      $data[] = array(pathinfo(urldecode($uri), PATHINFO_FILENAME));
     }
     die(json_encode(array('data' => $data)));
     break;

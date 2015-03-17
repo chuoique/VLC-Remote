@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="vendor/datatables/jquery.dataTables.css">
+  <link rel="stylesheet" type="text/css" href="assets/karaoke.css">
   <script src="vendor/jquery/jquery-1.11.1.min.js"></script>
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="karaoke.js"></script>
+  <script src="assets/karaoke.js"></script>
   <script>
     $(document).ready(function () {
       $('#list').DataTable({
         ajax: 'app.php',
         createdRow: function (row, data, index) {
-          var play = '<button class="vlc-control" data-action="play" data-id="' + data[0] + '">&#9654;</button> ';
-          var queue = '<button class="vlc-control" data-action="queue" data-id="' + data[0] + '">&#10133;</button> ';
-          $('td', row).eq(1).prepend(play + queue);
+          var play = '<button class="vlc-control btn btn-default btn-sm" data-action="play" data-id="' + index + '"><i class="glyphicon glyphicon-play"></i></button> ';
+          var queue = '<button class="vlc-control btn btn-default btn-sm" data-action="queue" data-id="' + index + '"><i class="glyphicon glyphicon-plus"></i></button> ';
+          $('td', row).eq(0).prepend(queue + play);
         },
         ordering: false,
         pageLength: 20,
         columns: [
-          {type: 'integer'},
           {type: 'string'}
         ]
       });
@@ -41,7 +44,6 @@
 <table id="list">
   <thead>
   <tr>
-    <th>ID</th>
     <th>Tên bài hát</th>
   </tr>
   </thead>
