@@ -14,5 +14,5 @@ This tool provides a web interface to build and cache file lists, allows files t
 ## Configuration
 
 - Open VLC and enable HTTP interface (see [VLC website](https://wiki.videolan.org/Documentation:Modules/http_intf/#VLC_2.0.0_and_later)). Do not forget to set a password in the Lua section.
-- Copy default.conf.php into conf.php, change the $host, $port, $password and $paths variables. $paths is an array of folders where media files are recursively searched.  
+- Copy default.conf.php into conf.php, change the $host, $port, $password and $paths variables. $paths is an array of folders where media files are recursively searched.
 - Open index.html in a web browser and enjoy!

@@ -19,10 +19,9 @@
           var queue = '<button class="vlc-control btn btn-default btn-sm" data-action="queue" data-id="' + index + '"><i class="glyphicon glyphicon-plus"></i></button> ';
           $('td', row).eq(0).prepend(queue + play);
         },
-        info: false,
         ordering: false,
         pageLength: 50,
-        dom: 'itp',
+        dom: 'tip',
         columns: [{type: 'string'}]
       });
       $('#custom-search').keyup(function(){
