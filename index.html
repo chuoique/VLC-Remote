@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="vendor/datatables/jquery.dataTables.css">
-    <script src="vendor/jquery/jquery-1.11.1.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="karaoke.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#list').DataTable({
-                ajax: 'karaoke.php?ajax=1',
-                createdRow: function ( row, data, index ) {
-                    var play =  '<button class="vlc-control" data-action="play" data-id="' + data[0] + '">&#9654;</button> ';
-                    var queue =  '<button class="vlc-control" data-action="queue" data-id="' + data[0] + '">&#8629;</button> ';
-                    $('td', row).eq(1).prepend(play + queue);
-                },
-                ordering: false,
-                pageLength: 20,
-                columns: [
-                    {type: 'integer'},
-                    {type: 'string'}
-                ]
-            });
-        });
+  <link rel="stylesheet" type="text/css" href="vendor/datatables/jquery.dataTables.css">
+  <script src="vendor/jquery/jquery-1.11.1.min.js"></script>
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="karaoke.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#list').DataTable({
+        ajax: 'app.php',
+        createdRow: function (row, data, index) {
+          var play = '<button class="vlc-control" data-action="play" data-id="' + data[0] + '">&#9654;</button> ';
+          var queue = '<button class="vlc-control" data-action="queue" data-id="' + data[0] + '">&#10133;</button> ';
+          $('td', row).eq(1).prepend(play + queue);
+        },
+        ordering: false,
+        pageLength: 20,
+        columns: [
+          {type: 'integer'},
+          {type: 'string'}
+        ]
+      });
 
-    </script>
+      $(document).on('click', '.vlc-control', function() {
+        var action = $(this).data('action');
+        var id = $(this).data('id');
+        $.ajax('app.php', {
+          method: 'GET',
+          data: {
+            action: action,
+            id: id
+          }
+        });
+      });
+    });
+
+  </script>
 </head>
 <body>
 <table id="list">
-    <thead>
-    <tr><th>ID</th><th>Tên bài hát</th></tr>
-    </thead>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Tên bài hát</th>
+  </tr>
+  </thead>
 </table>
 </body>
 </html>
