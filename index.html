@@ -9,6 +9,11 @@
         $(document).ready(function () {
             $('#list').DataTable({
                 ajax: 'karaoke.php?ajax=1',
+                createdRow: function ( row, data, index ) {
+                    var play =  '<button class="vlc-control" data-action="play" data-id="' + data[0] + '">&#9654;</button> ';
+                    var queue =  '<button class="vlc-control" data-action="queue" data-id="' + data[0] + '">&#8629;</button> ';
+                    $('td', row).eq(1).prepend(play + queue);
+                },
                 ordering: false,
                 pageLength: 20,
                 columns: [
