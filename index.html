@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+    <script src="karaoke.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#list').DataTable({
+                ajax: 'karaoke.php?ajax=1',
+                ordering: false,
+                pageLength: 20,
+                columns: [
+                    {type: 'integer'},
+                    {type: 'string'}
+                ]
+            });
+        });
+
+    </script>
+</head>
+<body>
+<table id="list">
+    <thead>
+    <tr><th>ID</th><th>Tên bài hát</th></tr>
+    </thead>
+<table>
+</body>
+</html>
