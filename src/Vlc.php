@@ -4,7 +4,7 @@
  *
  */
 
-namespace jcisio\Karaoke;
+namespace jcisio\VlcRemote;
 
 
 class Vlc {

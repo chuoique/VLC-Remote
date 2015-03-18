@@ -3,7 +3,7 @@
 require __DIR__ . '/src/Vlc.php';
 require file_exists(__DIR__ . '/conf.php') ? __DIR__ . '/conf.php' : __DIR__ . '/default.conf.php';
 
-$vlc = new \jcisio\Karaoke\Vlc($host, $port, $password, $paths);
+$vlc = new \jcisio\VlcRemote\Vlc($host, $port, $password, $paths);
 $items = $vlc->getFileList();
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 
