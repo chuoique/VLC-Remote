@@ -20,3 +20,5 @@ This tool provides a web interface to build and cache file lists, allows files t
 ## Optimization
 
 When VLC browses a directory, it reads media to retrieve metadata like media length etc. and the process takes a lot of time. To avoid timeout, do not store more than 1000 of files in a single directory. Split into subdirectories when there are a lot of files.
+
+Network storage is slow. My quick experiment shows that for directory listing, a Samba share is 800 times slower and a NFS mount is 20 times slower than a local storage. If you experience timeout, try it first with the fastest mount to generate the cached directory listing or try to generate the listing manually.
