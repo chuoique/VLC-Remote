@@ -58,7 +58,7 @@ class Vlc {
   }
 
   public function buildFileList() {
-    $filename = 'data/' . md5(serialize($this->paths)) . '.txt';
+    $filename = 'data/' . $this->host . '-' . md5(serialize($this->paths)) . '.txt';
     if (file_exists($filename)) {
       return $filename;
     }
