@@ -4,6 +4,8 @@ VLC supports remote control via its web interface. However current tools are not
 
 This tool provides a web interface to build and cache file lists, allows files to be searched and played/queued easily. It was built to use VLC as a karaoke player with very large song list (10,000+ mp4 files) however it can be used for other purpose.
 
+![VLC remote on a mobile](https://raw.githubusercontent.com/jcisio/vlc-remote/master/screenshot.png)
+
 # Installation
 
 ## Requirements
