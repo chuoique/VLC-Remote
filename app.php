@@ -5,7 +5,7 @@ require file_exists(__DIR__ . '/conf.php') ? __DIR__ . '/conf.php' : __DIR__ . '
 
 $vlc = new \jcisio\VlcRemote\Vlc($host, $port, $password, $paths);
 $items = $vlc->getFileList();
-$action = isset($_GET['action']) ? $_GET['action'] : 'list';
+$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'list';
 
 switch ($action) {
   case 'list':
@@ -17,20 +17,22 @@ switch ($action) {
     break;
 
   case 'fullscreen':
-    $vlc->send('status', array('command' => 'fullscreen'));
+  case 'pl_next':
+  case 'pl_previous':
+  case 'in_play':
+  case 'in_enqueue':
+    $options = array(
+      'command' => $action,
+    );
+    if (isset($_REQUEST['id'])) {
+      $id = (int) $_REQUEST['id'];
+      $options['input'] = $items[$id];
+    }
+    $vlc->send('status', $options);
     return;
 
   case 'audio':
     $status = $vlc->send('status');
     foreach ($status->Streams as $s){};return;
-
-  case 'play':
-  case 'queue':
-    $id = (int) $_GET['id'];
-    $command = $action == 'play' ? 'in_play' : 'in_enqueue';
-    $vlc->send('status', array(
-      'command' => $command,
-      'input' => $items[$id],
-    ));
     break;
 }
