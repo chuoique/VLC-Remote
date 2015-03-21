@@ -78,4 +78,8 @@ class Vlc {
     return $items;
   }
 
+  public function getTitle($uri) {
+    return pathinfo(urldecode($uri), PATHINFO_FILENAME);
+  }
+
 }

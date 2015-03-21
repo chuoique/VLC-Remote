@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function($) {
   // From backbone paginator.
   function removeDiacritics(str) {
     var defaultDiacriticsRemovalMap = [
@@ -232,4 +232,69 @@
     return data ? (typeof data === 'string' ? removeDiacritics(data) : data) : '';
   };
 
-})();
+  window.vlc = {
+    api: 'app.php',
+    audioTrack: 1
+  };
+
+  vlc.fadeInOut = function() {
+    $('#fade-wrapper').fadeIn(200, function() {
+      $(this).fadeOut(400);
+    });
+  };
+
+  vlc.nextAudioTrack = function() {
+    // @todo detect current and max track.
+    this.audioTrack = 3 - this.audioTrack;
+    $.ajax(vlc.api, {
+      method: 'POST',
+      success: vlc.fadeInOut,
+      data: {
+        action: 'audio_track',
+        track: this.audioTrack
+      }
+    });
+  };
+
+  $(document).ready(function(){
+    $('body').append('<div id="fade-wrapper" class="modal"></div>');
+    var oTable = $('#list').DataTable({
+      ajax: vlc.api,
+      createdRow: function (row, data, index) {
+        var play = '<button class="vlc-control btn btn-default btn-sm" data-action="in_play" data-id="' + index + '"><i class="glyphicon glyphicon-play"></i></button> ';
+        var queue = '<button class="vlc-control btn btn-default btn-sm" data-action="in_enqueue" data-id="' + index + '"><i class="glyphicon glyphicon-plus"></i></button> ';
+        $('td', row).eq(0).prepend(queue + play);
+      },
+      ordering: false,
+      pageLength: 50,
+      dom: 'tip',
+      columns: [{type: 'string'}]
+    });
+    $('#custom-search').keyup(function(){
+      oTable.search($(this).val()).draw();
+    });
+    $(document).on('click', 'button', function() {
+      var action = $(this).data('action');
+      if (action == 'playlist') {
+
+      }
+      else if (action == 'audio_track') {
+        vlc.nextAudioTrack();
+      }
+      else {
+        var id = $(this).data('id');
+        var method = $(this).data('method') == 'get' ? 'GET' : 'POST';
+        $.ajax(vlc.api, {
+          method: method,
+          success: vlc.fadeInOut,
+          data: {
+            action: action,
+            id: id
+          }
+        });
+      }
+    });
+  });
+
+})(jQuery);
+

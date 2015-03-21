@@ -11,7 +11,7 @@ switch ($action) {
   case 'list':
     $data = array();
     foreach ($items as $uri) {
-      $data[] = array(pathinfo(urldecode($uri), PATHINFO_FILENAME));
+      $data[] = array($vlc->getTitle($uri));
     }
     die(json_encode(array('data' => $data)));
     break;
@@ -31,8 +31,12 @@ switch ($action) {
     $vlc->send('status', $options);
     return;
 
-  case 'audio':
-    $status = $vlc->send('status');
-    foreach ($status->Streams as $s){};return;
+  case 'audio_track':
+    $vlc->send('status', ['command' => 'audio_track', 'val' => (int) $_REQUEST['track']]);
+    break;
+
+  case 'playlist':
+    $status = $vlc->send('playlist');
+    var_export($status);
     break;
 }

@@ -10,9 +10,12 @@ div.dataTables_info {
   float: right;
   margin: 0 0 0 .2em;
 }
+.modal {
+  background: #ccc;
+}
 /**
  * Bootstrap overrides it https://github.com/twbs/bootstrap/issues/5624
- * Bring the style back because it is very useful in mobile where this app is
+ * Bring the style back because it is very useful in mobile where this api is
  * mostly used.
  */
 input[type="search"]::-webkit-search-cancel-button {
