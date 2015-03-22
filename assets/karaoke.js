@@ -238,7 +238,12 @@
   };
 
   vlc.fadeInOut = function() {
-    $('#fade-wrapper').fadeIn(200, function() {
+    if ($('.modal-backdrop').length == 0) {
+      $(document.createElement('div'))
+        .addClass('modal-backdrop fade in')
+        .appendTo($('body'));
+    }
+    $('.modal-backdrop').fadeIn(0, function() {
       $(this).fadeOut(400);
     });
   };
@@ -257,7 +262,7 @@
   };
 
   $(document).ready(function(){
-    $('body').append('<div id="fade-wrapper" class="modal"></div>');
+    vlc.fadeInOut();
     var oTable = $('#list').DataTable({
       ajax: vlc.api,
       createdRow: function (row, data, index) {
@@ -276,7 +281,17 @@
     $(document).on('click', 'button', function() {
       var action = $(this).data('action');
       if (action == 'playlist') {
-
+        $.ajax(vlc.api, {
+          data: {action: 'playlist'},
+          success: function(data) {
+            var content = $('<tbody></tbody>');
+            JSON.parse(data).forEach(function(item) {
+              content.append('<tr class="' + (item.current ? 'current' : '') + '"><td>' + item.name + '</td></tr>');
+            });
+            $('#playlist').find('table').html(content);
+            $('#playlist').modal();
+          }
+        });
       }
       else if (action == 'audio_track') {
         vlc.nextAudioTrack();

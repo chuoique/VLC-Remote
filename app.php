@@ -37,6 +37,19 @@ switch ($action) {
 
   case 'playlist':
     $status = $vlc->send('playlist');
-    var_export($status);
+    $items = array();
+    foreach ($status->children as $child) {
+      if ($child->name != 'Playlist') {
+        continue;
+      }
+      foreach ($child->children as $subchild) {
+        $items[] = array(
+          'id' => $subchild->id,
+          'name' => $vlc->getTitle($subchild->uri),
+          'current' => isset($subchild->current),
+        );
+      }
+    }
+    echo json_encode($items);
     break;
 }
